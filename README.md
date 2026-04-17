@@ -31,4 +31,4 @@ npm run test:e2e
 
 ## Deployment
 
-Pushing to `main` triggers the GitHub Pages workflow in `.github/workflows/deploy.yml`.
+The repository is prepared for GitHub Pages static hosting. In the current environment, Pages deployment is published manually from the built `gh-pages` branch because the active GitHub token does not include workflow write scope.
