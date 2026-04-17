@@ -23,7 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 scroll-audit
+scroll-audit-20260417
 review-captures
+review-captures-20260417
 review-captures-sections
 test-results
 playwright-report

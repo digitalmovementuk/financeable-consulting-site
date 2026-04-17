@@ -18,6 +18,11 @@ body {
   margin: 0;
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
 ::selection {
   background: rgba(176, 20, 255, 0.35);
   color: #fff;
@@ -53,25 +58,119 @@ body {
   .split-line {
     overflow: hidden;
   }
+
+  .gradient-outline {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .gradient-outline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.08) 34%,
+      rgba(255, 255, 255, 0.04) 65%,
+      rgba(255, 255, 255, 0.18) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .gradient-outline > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .glass-cta {
+    position: relative;
+    isolation: isolate;
+    border-radius: 999px;
+    padding: 0.35rem 0.4rem 0.35rem 1rem;
+    color: white;
+  }
+
+  .glass-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      200deg,
+      rgba(244, 225, 255, 0.82) 0%,
+      rgba(244, 225, 255, 0.08) 42%,
+      rgba(244, 225, 255, 0.08) 58%,
+      rgba(244, 225, 255, 0.82) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .glass-cta::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    z-index: 0;
+  }
+
+  .glass-cta > * {
+    position: relative;
+    z-index: 2;
+  }
 }
 
-.financeable-benefits-swiper {
+.feature-swiper,
+.benefits-swiper {
   overflow: visible !important;
 }
 
-.financeable-benefits-swiper .swiper-pagination {
-  position: static;
-  margin-top: 1.5rem;
-  text-align: left;
+.benefits-swiper .swiper-slide {
+  height: auto;
 }
 
-.financeable-benefits-swiper .swiper-pagination-bullet {
-  width: 0.75rem;
-  height: 0.75rem;
-  background: rgba(221, 187, 241, 0.35);
-  opacity: 1;
+.feature-card,
+.faq-card {
+  backface-visibility: hidden;
 }
 
-.financeable-benefits-swiper .swiper-pagination-bullet-active {
-  background: #ddbbf1;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
 }
