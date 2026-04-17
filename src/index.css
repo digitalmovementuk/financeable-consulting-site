@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+::selection {
+  background: rgba(176, 20, 255, 0.35);
+  color: #fff;
+}
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+
+  body {
+    @apply min-w-[320px] overflow-x-hidden bg-canvas font-sans text-ink antialiased;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  code {
+    @apply rounded-md border border-white/10 bg-white/5 px-2 py-1 font-mono text-[0.925em] text-lilac;
+  }
+}
+
+@layer components {
+  .surface-glass {
+    @apply rounded-panel border border-white/10 bg-white/[0.045] shadow-panel backdrop-blur-xl;
+  }
+
+  .surface-light {
+    @apply rounded-panel bg-white;
+  }
+
+  .split-line {
+    overflow: hidden;
+  }
+}
+
+.financeable-benefits-swiper {
+  overflow: visible !important;
+}
+
+.financeable-benefits-swiper .swiper-pagination {
+  position: static;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.financeable-benefits-swiper .swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+  background: rgba(221, 187, 241, 0.35);
+  opacity: 1;
+}
+
+.financeable-benefits-swiper .swiper-pagination-bullet-active {
+  background: #ddbbf1;
+}
