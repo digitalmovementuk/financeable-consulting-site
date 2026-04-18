@@ -589,6 +589,35 @@ function App() {
         },
       })
 
+      gsap.to('[data-hero-copy-motion]', {
+        yPercent: -12,
+        xPercent: 3,
+        rotate: -2,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      })
+
+      gsap.utils.toArray<HTMLElement>('[data-hero-copy-layer]').forEach((layer) => {
+        const depth = Number(layer.dataset.depth ?? 20)
+
+        gsap.to(layer, {
+          yPercent: -depth,
+          xPercent: depth * 0.3,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        })
+      })
+
       return () => {
         split.revert()
       }
@@ -917,6 +946,43 @@ function App() {
 
           <div className="mx-auto grid w-full max-w-7xl gap-16 px-6 pb-20 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:pb-28">
             <div className="relative z-10 max-w-4xl">
+              <div data-hero-copy-motion className="hero-copy-motion">
+                <div
+                  data-hero-copy-layer
+                  data-depth="10"
+                  className="hero-copy-layer hero-copy-grid"
+                />
+                <div
+                  data-hero-copy-layer
+                  data-depth="18"
+                  className="hero-copy-layer hero-copy-glow hero-copy-glow-one"
+                />
+                <div
+                  data-hero-copy-layer
+                  data-depth="26"
+                  className="hero-copy-layer hero-copy-glow hero-copy-glow-two"
+                />
+                <div
+                  data-hero-copy-layer
+                  data-depth="14"
+                  className="hero-copy-layer hero-copy-band hero-copy-band-one"
+                />
+                <div
+                  data-hero-copy-layer
+                  data-depth="20"
+                  className="hero-copy-layer hero-copy-band hero-copy-band-two"
+                />
+                <div
+                  data-hero-copy-layer
+                  data-depth="24"
+                  className="hero-copy-layer hero-copy-ring hero-copy-ring-one"
+                />
+                <div
+                  data-hero-copy-layer
+                  data-depth="30"
+                  className="hero-copy-layer hero-copy-ring hero-copy-ring-two"
+                />
+              </div>
               <motion.div
                 initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 18 }}
                 animate={{ opacity: 1, y: 0 }}
