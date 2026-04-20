@@ -9,6 +9,13 @@ Second design version:
 - source: `src/AppV2.tsx`
 - route: `/v2/`
 
+Third design version (Apple-style refresh):
+
+- source: `src/AppV3.tsx`
+- styles: `src/v3.css`
+- entry: `v3/index.html` via `src/v3-main.tsx`
+- route: `/v3/`
+
 ## Stack
 
 - React 19
