@@ -21,6 +21,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         v2: resolve(__dirname, 'v2/index.html'),
         v3: resolve(__dirname, 'v3/index.html'),
+        v4: resolve(__dirname, 'v4/index.html'),
       },
       output: {
         manualChunks(id) {
