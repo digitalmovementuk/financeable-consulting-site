@@ -28,8 +28,6 @@ const withBase = (file: string) => `${import.meta.env.BASE_URL}media/voxr/${file
 const media = {
   hero: withBase('hero.avif'),
   processGlow: withBase('process-glow.avif'),
-  chain: withBase('chain.png'),
-  laptop: withBase('laptop.avif'),
   frame: withBase('frame16.avif'),
   statLine: withBase('stat-line.svg'),
   illustrations: [
@@ -109,25 +107,6 @@ const featureCards: readonly FeatureCardData[] = [
     bullets: ['Rolling cashflow forecast', 'Forward-looking decision support'],
     icon: Wallet,
     visual: 'speed',
-  },
-] as const
-
-const quantifiedCards = [
-  {
-    value: 'Core',
-    label: 'Three core services built around the support businesses need as they scale.',
-  },
-  {
-    value: 'Structured',
-    label: 'Consistent operating cadence that brings clarity, not reactive firefighting.',
-  },
-  {
-    value: 'Flexible',
-    label: 'No commitment upfront. We start with a conversation.',
-  },
-  {
-    value: 'London',
-    label: 'Primary market focus, supporting London-based businesses with reach across selected UK growth hubs.',
   },
 ] as const
 
@@ -286,6 +265,10 @@ const darkButton =
   'inline-flex items-center justify-center gap-2 rounded-pill border border-white/14 bg-white px-6 py-3 text-sm font-medium text-black transition hover:bg-[#ead5ff]'
 const lightButton =
   'inline-flex items-center justify-center gap-2 rounded-pill border border-white/14 bg-white/6 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10'
+const sectionHeadingLight =
+  'mt-6 font-display text-4xl font-bold leading-[0.94] tracking-[-0.06em] text-[#16091f] md:text-6xl'
+const sectionHeadingDark =
+  'mt-6 font-display text-4xl font-bold leading-[0.94] tracking-[-0.06em] text-white md:text-6xl'
 
 function SectionPill({
   children,
@@ -636,17 +619,6 @@ function App() {
           },
         })
 
-        gsap.to('.journey-chain', {
-          xPercent: -16,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: () => `+=${distance + 900}`,
-            scrub: 1,
-          },
-        })
-
         gsap.to('.journey-logo', {
           yPercent: -10,
           rotate: -6,
@@ -919,7 +891,7 @@ function App() {
 
               <h1
                 ref={heroTitleRef}
-                className="mt-7 max-w-5xl font-display text-[3.2rem] font-semibold leading-[0.97] tracking-[-0.055em] text-ink md:text-[4.8rem] xl:text-[5.55rem]"
+                className="mt-7 max-w-5xl font-display text-[3.2rem] font-bold leading-[0.92] tracking-[-0.07em] text-ink md:text-[4.8rem] xl:text-[5.55rem]"
               >
                 For businesses that need clearer monthly decisions.
               </h1>
@@ -975,7 +947,7 @@ function App() {
               }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.72, delay: 0.12 }}
-              className="relative"
+              className="relative lg:pt-20"
             >
               <div className="absolute -inset-6 hidden rounded-[40px] bg-[radial-gradient(circle_at_top_right,rgba(176,20,255,0.34),transparent_40%)] blur-2xl md:block" />
               <div className="gradient-outline relative overflow-hidden rounded-[32px] bg-white/[0.06] p-6 shadow-glow backdrop-blur-xl md:p-8">
@@ -1056,10 +1028,7 @@ function App() {
           <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
             <div className="mx-auto max-w-3xl text-center">
               <SectionPill theme="light">Core capabilities</SectionPill>
-              <h2
-                data-reveal
-                className="mt-6 font-display text-4xl font-medium tracking-[-0.05em] md:text-6xl"
-              >
+              <h2 data-reveal className={sectionHeadingLight}>
                 Three finance support routes, built around the moments growing businesses lose clarity.
               </h2>
               <p
@@ -1120,84 +1089,6 @@ function App() {
         </section>
 
         <section
-          id="quantified"
-          data-parallax-section
-          className="relative overflow-hidden bg-white py-24 text-[#13071d] md:py-32"
-        >
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(circle_at_top,rgba(127,52,164,0.11),transparent_60%)]" />
-          <div className="mx-auto w-full max-w-6xl px-6 md:px-10">
-            <div className="mx-auto max-w-3xl text-center">
-              <SectionPill theme="light">Stats bar</SectionPill>
-              <div data-reveal className="relative mt-6">
-                <h2 className="relative font-display text-4xl font-medium tracking-[-0.05em] md:text-7xl">
-                  Core services, structured cadence, flexible start, and London focus.
-                </h2>
-              </div>
-            </div>
-
-            <div className="mt-14 grid gap-4 md:hidden">
-              {quantifiedCards.map((card) => (
-                <article
-                  key={card.value}
-                  data-reveal
-                  className="rounded-[30px] border border-[#eadcf5] bg-[linear-gradient(180deg,#fff,#fbf7ff)] p-6 shadow-[0_24px_70px_rgba(97,31,146,0.08)]"
-                >
-                  <div className="font-display text-5xl tracking-[-0.06em] text-[#16091f]">
-                    {card.value}
-                  </div>
-                  <p className="mt-4 text-base leading-8 text-[#5a4c6b]">{card.label}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="relative mt-16 hidden min-h-[38rem] md:block">
-              <article
-                data-parallax="110"
-                className="absolute left-0 top-10 w-[20rem] rounded-[32px] border border-[#eadcf5] bg-[linear-gradient(180deg,#fff,#fbf7ff)] p-7 shadow-[0_24px_70px_rgba(97,31,146,0.08)]"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="font-display text-6xl tracking-[-0.06em] text-[#16091f]">
-                    {quantifiedCards[0].value}
-                  </div>
-                  <img src={media.statLine} alt="" className="h-14 w-20 object-contain" />
-                </div>
-                <p className="mt-4 text-base leading-8 text-[#5a4c6b]">{quantifiedCards[0].label}</p>
-              </article>
-
-              <article
-                data-parallax="80"
-                className="absolute right-0 top-0 w-[18rem] rounded-[32px] border border-[#e7d9f3] bg-[linear-gradient(180deg,#fdf9ff,#f8efff)] p-7 shadow-[0_24px_70px_rgba(97,31,146,0.08)]"
-              >
-                <div className="font-display text-6xl tracking-[-0.06em] text-[#16091f]">
-                  {quantifiedCards[1].value}
-                </div>
-                <p className="mt-4 text-base leading-8 text-[#5a4c6b]">{quantifiedCards[1].label}</p>
-              </article>
-
-              <article
-                data-parallax="140"
-                className="absolute left-[19rem] bottom-2 w-[20rem] rounded-[32px] border border-[#eadcf5] bg-[linear-gradient(180deg,#fff,#fbf7ff)] p-7 shadow-[0_24px_70px_rgba(97,31,146,0.08)]"
-              >
-                <div className="font-display text-6xl tracking-[-0.06em] text-[#16091f]">
-                  {quantifiedCards[2].value}
-                </div>
-                <p className="mt-4 text-base leading-8 text-[#5a4c6b]">{quantifiedCards[2].label}</p>
-              </article>
-
-              <article
-                data-parallax="95"
-                className="absolute right-[8.5rem] bottom-12 w-[18rem] rounded-[32px] border border-[#eadcf5] bg-[linear-gradient(180deg,#fff,#fbf7ff)] p-7 shadow-[0_24px_70px_rgba(97,31,146,0.08)]"
-              >
-                <div className="font-display text-6xl tracking-[-0.06em] text-[#16091f]">
-                  {quantifiedCards[3].value}
-                </div>
-                <p className="mt-4 text-base leading-8 text-[#5a4c6b]">{quantifiedCards[3].label}</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section
           id="journey"
           ref={journeyRef}
           className="relative overflow-hidden bg-[#0d0413] text-white lg:min-h-[100vh]"
@@ -1207,11 +1098,6 @@ function App() {
             backgroundSize: 'cover',
           }}
         >
-          <img
-            src={media.chain}
-            alt=""
-            className="journey-chain pointer-events-none absolute left-1/2 top-[54%] hidden h-[220px] w-[210vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-70 blur-[1.4px] lg:block"
-          />
           <img
             src={media.frame}
             alt=""
@@ -1225,15 +1111,10 @@ function App() {
                 alt=""
                 className="pointer-events-none absolute right-[-12rem] top-28 h-[28rem] w-auto opacity-[0.78]"
               />
-              <img
-                src={media.chain}
-                alt=""
-                className="pointer-events-none absolute left-1/2 top-[52%] h-24 w-[180vw] max-w-none -translate-x-1/2 opacity-60 blur-[1.4px]"
-              />
 
               <div className="relative max-w-xl">
                 <SectionPill>How it works</SectionPill>
-                <h2 className="mt-6 font-display text-4xl font-medium tracking-[-0.05em] text-white md:text-6xl">
+                <h2 className={sectionHeadingDark}>
                   Understand your finance setup, build the right routine, and use it to
                   support better decisions.
                 </h2>
@@ -1264,7 +1145,7 @@ function App() {
                         <h3 className="mt-8 font-display text-3xl font-medium tracking-[-0.04em] text-white">
                           {step.title}
                         </h3>
-                        <p className="mt-5 text-sm leading-7 text-[#c8bdd6]">{step.copy}</p>
+                        <p className="mt-5 text-base leading-8 text-[#ddd1ea]">{step.copy}</p>
                       </article>
                     </SwiperSlide>
                   ))}
@@ -1276,7 +1157,7 @@ function App() {
                         Ready for clear monthly numbers, better decisions, and a more
                         controlled finance function?
                       </h3>
-                      <p className="mt-5 text-sm leading-7 text-[#c8bdd6]">
+                      <p className="mt-5 text-base leading-8 text-[#ddd1ea]">
                         Cuno helps founder-led businesses and growing teams build a more
                         controlled finance function without forcing an early full-time
                         hire.
@@ -1312,7 +1193,7 @@ function App() {
           <div ref={journeyTrackRef} className="hidden lg:flex lg:w-max lg:items-center lg:gap-8 lg:px-[6vw] lg:py-20">
             <div className="w-[28rem] shrink-0">
               <SectionPill>How it works</SectionPill>
-              <h2 className="mt-6 max-w-[24rem] font-display text-[4.2rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+              <h2 className="mt-6 max-w-[24rem] font-display text-[4.2rem] font-bold leading-[0.93] tracking-[-0.06em] text-white">
                 Understand your finance setup, build the right routine, and use it to
                 support better decisions.
               </h2>
@@ -1335,7 +1216,7 @@ function App() {
                 <h3 className="mt-8 font-display text-[2.2rem] font-medium leading-tight tracking-[-0.045em] text-white">
                   {step.title}
                 </h3>
-                <p className="mt-5 text-base leading-8 text-[#c8bdd6]">{step.copy}</p>
+                <p className="mt-5 text-[1.05rem] leading-8 text-[#ddd1ea]">{step.copy}</p>
               </article>
             ))}
 
@@ -1344,7 +1225,7 @@ function App() {
               <h3 className="mt-6 max-w-[22rem] font-display text-[2.6rem] font-medium leading-tight tracking-[-0.045em] text-white">
                 Ready for clear monthly numbers, better decisions, and a more controlled finance function?
               </h3>
-              <p className="mt-5 max-w-[23rem] text-base leading-8 text-[#c8bdd6]">
+              <p className="mt-5 max-w-[23rem] text-[1.05rem] leading-8 text-[#ddd1ea]">
                 Cuno helps growing businesses improve monthly visibility through Senior
                 Finance Support, Management Reporting, and Cashflow Forecasting.
               </p>
@@ -1356,59 +1237,15 @@ function App() {
           </div>
         </section>
 
-        <section className="bg-[#fbf8fe] py-24 text-[#13071d] md:py-32">
-          <div className="mx-auto grid w-full max-w-7xl gap-6 px-6 md:px-10 lg:grid-cols-2">
-            <article
-              data-reveal
-              className="rounded-[34px] border border-[#eadcf5] bg-white p-8 shadow-[0_24px_70px_rgba(97,31,146,0.08)] md:p-10"
-            >
-              <SectionPill theme="light">About Cuno</SectionPill>
-              <h2 className="mt-6 font-display text-4xl font-medium tracking-[-0.05em] md:text-5xl">
-                Cuno is built around useful monthly control.
-              </h2>
-              <p className="mt-6 text-base leading-8 text-[#5a4c6b] md:text-lg">
-                Cuno is positioned as a practical senior finance partner for
-                founder-led businesses, startups, and growing SMEs that need clearer
-                monthly control. The approach is designed to fit before a full-time
-                senior finance hire is justified.
-              </p>
-            </article>
-
-            <article
-              data-reveal
-              className="rounded-[34px] border border-[#eadcf5] bg-white p-8 shadow-[0_24px_70px_rgba(97,31,146,0.08)] md:p-10"
-            >
-              <SectionPill theme="light">Why Cuno</SectionPill>
-              <h2 className="mt-6 font-display text-4xl font-medium tracking-[-0.05em] md:text-5xl">
-                Commercially useful finance layer for founders and start-ups.
-              </h2>
-              <ul className="mt-6 grid gap-4 text-base leading-8 text-[#5a4c6b]">
-                <li>Built around financial clarity, not generic advisory language</li>
-                <li>Designed for businesses that are too complex for informal finance, but too early for a full-time senior hire</li>
-                <li>Focused on decision usefulness, not just historic reporting</li>
-                <li>Low-friction entry point</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
         <section
           id="benefits"
           className="relative overflow-hidden bg-[#0d0413] py-24 text-white md:py-32"
         >
-          <img
-            src={media.frame}
-            alt=""
-            className="pointer-events-none absolute left-[-10rem] top-[-8rem] hidden h-[34rem] w-auto opacity-92 lg:block"
-          />
           <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
             <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
                 <SectionPill>Why Cuno</SectionPill>
-                <h2
-                  data-reveal
-                  className="mt-6 font-display text-4xl font-medium tracking-[-0.05em] text-white md:text-6xl"
-                >
+                <h2 data-reveal className={sectionHeadingDark}>
                   More than reporting, less than a full-time senior finance hire.
                 </h2>
               </div>
@@ -1475,7 +1312,7 @@ function App() {
                         <h3 className="font-display text-[2rem] font-medium leading-tight tracking-[-0.04em] text-white">
                           {slide.title}
                         </h3>
-                        <p className="mt-5 text-base leading-8 text-[#c9bfd6]">{slide.copy}</p>
+                        <p className="mt-5 text-[1.05rem] leading-8 text-[#ddd1ea]">{slide.copy}</p>
                       </div>
                       <div>
                         <div className="rounded-[18px] border border-white/8 bg-white/[0.05] px-4 py-3 text-sm text-[#efe3ff]">
@@ -1500,10 +1337,7 @@ function App() {
           <div className="mx-auto w-full max-w-7xl px-6 md:px-10">
             <div className="mx-auto max-w-3xl text-center">
               <SectionPill>Operating outcomes</SectionPill>
-              <h2
-                data-reveal
-                className="mt-6 font-display text-4xl font-medium tracking-[-0.05em] text-white md:text-6xl"
-              >
+              <h2 data-reveal className={sectionHeadingDark}>
                 Finance support that delivers operating control.
               </h2>
             </div>
@@ -1519,7 +1353,7 @@ function App() {
                     <div className="font-display text-4xl tracking-[-0.05em] text-[#e0bfff]">
                       {title}
                     </div>
-                    <div className="mt-3 text-base leading-7 text-[#c7bdd4]">{copy}</div>
+                    <div className="mt-3 text-[1.05rem] leading-8 text-[#ddd1ea]">{copy}</div>
                   </div>
                 ))}
               </div>
@@ -1547,17 +1381,17 @@ function App() {
 
                 <div className="mt-8 border-t border-white/8 pt-6">
                   <div className="text-sm uppercase tracking-[0.28em] text-lilac">Challenge</div>
-                  <p className="mt-3 text-base leading-8 text-[#d1c7dc]">{activeCaseItem.challenge}</p>
+                  <p className="mt-3 text-[1.05rem] leading-8 text-[#ddd1ea]">{activeCaseItem.challenge}</p>
                 </div>
 
                 <div className="mt-6 border-t border-white/8 pt-6">
                   <div className="text-sm uppercase tracking-[0.28em] text-lilac">Support focus</div>
-                  <p className="mt-3 text-base leading-8 text-[#d1c7dc]">{activeCaseItem.focus}</p>
+                  <p className="mt-3 text-[1.05rem] leading-8 text-[#ddd1ea]">{activeCaseItem.focus}</p>
                 </div>
 
                 <div className="mt-6 border-t border-white/8 pt-6">
                   <div className="text-sm uppercase tracking-[0.28em] text-lilac">What improves</div>
-                  <p className="mt-3 text-base leading-8 text-[#d1c7dc]">{activeCaseItem.change}</p>
+                  <p className="mt-3 text-[1.05rem] leading-8 text-[#ddd1ea]">{activeCaseItem.change}</p>
                 </div>
               </motion.article>
 
@@ -1574,7 +1408,7 @@ function App() {
                 <h3 className="mt-8 font-display text-3xl font-medium leading-tight tracking-[-0.04em] text-white">
                   {activeCaseItem.principleTitle}
                 </h3>
-                <p className="mt-5 text-base leading-8 text-[#d1c7dc]">
+                <p className="mt-5 text-[1.05rem] leading-8 text-[#ddd1ea]">
                   {activeCaseItem.principleCopy}
                 </p>
               </motion.article>
@@ -1595,43 +1429,6 @@ function App() {
                   setActiveCase((current) => (current + 1) % caseStudies.length)
                 }}
               />
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-[#120419] px-6 pb-24 md:px-10 md:pb-32">
-          <div
-            data-reveal
-            className="mx-auto grid w-full max-w-7xl gap-10 overflow-hidden rounded-[36px] bg-[linear-gradient(120deg,#8f3eb7,#6f2ca5_58%,#a949db)] p-8 text-white shadow-[0_30px_90px_rgba(111,44,165,0.34)] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-10"
-          >
-            <div className="relative order-2 lg:order-1">
-              <img
-                src={media.laptop}
-                alt=""
-                className="w-full rotate-[-6deg] rounded-[24px] object-cover shadow-[0_40px_70px_rgba(0,0,0,0.28)]"
-              />
-            </div>
-
-            <div className="order-1 lg:order-2">
-              <h2 className="max-w-xl font-display text-4xl font-medium leading-tight tracking-[-0.05em] text-white md:text-6xl">
-                Monthly senior finance support that connects reporting, cash visibility,
-                <span className="bg-[linear-gradient(180deg,#ffffff,#f3d8ff)] bg-clip-text text-transparent">
-                  {' '}
-                  and leadership decisions.
-                </span>
-              </h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/80 md:text-lg">
-                This is the clearest entry point for businesses that need more than
-                reporting and less than a full-time senior finance hire. Cuno combines
-                recurring finance leadership, management discussion, reporting review,
-                and practical decision support.
-              </p>
-              <a href="#contact" className="glass-cta mt-8 inline-flex items-center gap-3">
-                <span className="px-1">Explore your senior finance support</span>
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#b600ff] text-white">
-                  <ArrowRight className="h-5 w-5" />
-                </span>
-              </a>
             </div>
           </div>
         </section>
@@ -1697,10 +1494,7 @@ function App() {
           <div className="pointer-events-none absolute left-1/2 top-0 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(176,20,255,0.46),transparent_68%)] blur-2xl" />
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 text-center md:px-10">
             <SectionPill>Ready to start</SectionPill>
-            <h2
-              data-reveal
-              className="mt-6 max-w-4xl font-display text-4xl font-medium tracking-[-0.05em] text-white md:text-6xl"
-            >
+            <h2 data-reveal className={`max-w-4xl ${sectionHeadingDark}`}>
               Make the finance function easier to manage each month.
             </h2>
             <p
