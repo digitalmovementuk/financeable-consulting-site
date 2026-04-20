@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import App from '@/App.tsx'
 
 const idleBackground = { x: 0.46, y: 0.24 }
+const lightSurfaceSelector = '#features, #benefits, #faq'
 const toDataUri = (markup: string) => `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(markup)}`
 const benefitVisuals = [
   toDataUri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 260" fill="none">
@@ -62,8 +63,10 @@ function AnimatedCursor({ themeRef }: { themeRef: { current: HTMLDivElement | nu
   const targetRef = useRef({ x: 0, y: 0 })
   const backgroundCurrentRef = useRef(idleBackground)
   const backgroundTargetRef = useRef(idleBackground)
+  const lightSurfaceRef = useRef(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isInteractive, setIsInteractive] = useState(false)
+  const [isOnLightSurface, setIsOnLightSurface] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
 
   useEffect(() => {
@@ -131,6 +134,14 @@ function AnimatedCursor({ themeRef }: { themeRef: { current: HTMLDivElement | nu
 
       setIsVisible(true)
 
+      const elementUnderPointer = document.elementFromPoint(event.clientX, event.clientY)
+      const nextOnLightSurface = Boolean(elementUnderPointer?.closest(lightSurfaceSelector))
+
+      if (lightSurfaceRef.current !== nextOnLightSurface) {
+        lightSurfaceRef.current = nextOnLightSurface
+        setIsOnLightSurface(nextOnLightSurface)
+      }
+
       const target = event.target
 
       if (target instanceof Element) {
@@ -144,6 +155,8 @@ function AnimatedCursor({ themeRef }: { themeRef: { current: HTMLDivElement | nu
 
     const handlePointerLeave = () => {
       setIsVisible(false)
+      lightSurfaceRef.current = false
+      setIsOnLightSurface(false)
       backgroundTargetRef.current = idleBackground
     }
     const handlePointerDown = () => setIsPressed(true)
@@ -171,12 +184,12 @@ function AnimatedCursor({ themeRef }: { themeRef: { current: HTMLDivElement | nu
       <div
         ref={ringRef}
         aria-hidden="true"
-        className={`v5-cursor-ring${isVisible ? ' is-visible' : ''}${isInteractive ? ' is-interactive' : ''}${isPressed ? ' is-pressed' : ''}`}
+        className={`v5-cursor-ring${isVisible ? ' is-visible' : ''}${isInteractive ? ' is-interactive' : ''}${isOnLightSurface ? ' on-light' : ''}${isPressed ? ' is-pressed' : ''}`}
       />
       <div
         ref={dotRef}
         aria-hidden="true"
-        className={`v5-cursor-dot${isVisible ? ' is-visible' : ''}${isInteractive ? ' is-interactive' : ''}${isPressed ? ' is-pressed' : ''}`}
+        className={`v5-cursor-dot${isVisible ? ' is-visible' : ''}${isInteractive ? ' is-interactive' : ''}${isOnLightSurface ? ' on-light' : ''}${isPressed ? ' is-pressed' : ''}`}
       />
     </>
   )
@@ -193,6 +206,10 @@ function AppV5() {
     }
 
     const applyV5Enhancements = () => {
+      theme.querySelectorAll<HTMLElement>(lightSurfaceSelector).forEach((section) => {
+        section.classList.add('v5-light-surface')
+      })
+
       const headerBrand = theme.querySelector<HTMLElement>('header a[href="#top"]')
 
       if (headerBrand) {
@@ -250,6 +267,10 @@ function AppV5() {
         'main section:first-of-type .surface-glass .text-sm.text-lilac',
       )
 
+      theme
+        .querySelector<HTMLElement>('main section:first-of-type .rounded-pill')
+        ?.classList.add('v5-hero-pill')
+
       if (heroMetricLabel && heroMetricLabel.textContent !== 'Reporting') {
         heroMetricLabel.textContent = 'Reporting'
       }
@@ -272,11 +293,35 @@ function AppV5() {
       const desktopJourneyTrack = theme.querySelector<HTMLElement>('#journey .hidden.lg\\:flex')
       desktopJourneyTrack?.firstElementChild?.classList.add('v5-journey-intro')
 
+      const journeySection = theme.querySelector<HTMLElement>('#journey')
+
+      if (journeySection) {
+        journeySection.classList.add('v5-journey-section')
+
+        if (!journeySection.querySelector('.v5-journey-mark')) {
+          const journeyMark = document.createElement('div')
+          journeyMark.className = 'v5-journey-mark'
+          journeyMark.setAttribute('aria-hidden', 'true')
+          journeySection.prepend(journeyMark)
+        }
+      }
+
       theme.querySelectorAll<HTMLElement>('#journey article').forEach((card) => {
         if (card.textContent?.includes('Ready for clear monthly numbers')) {
           card.classList.add('v5-journey-ready-card')
         }
       })
+
+      const outcomesSection = Array.from(theme.querySelectorAll<HTMLElement>('main section')).find(
+        (section) => section.textContent?.includes('Finance support that delivers operating control.'),
+      )
+
+      if (outcomesSection) {
+        outcomesSection.classList.add('v5-outcomes-section')
+        outcomesSection
+          .querySelector<HTMLElement>(':scope > .pointer-events-none.absolute')
+          ?.classList.add('v5-outcomes-glow')
+      }
 
       theme.querySelectorAll<HTMLElement>('#benefits article').forEach((card, index) => {
         card.classList.add('v5-benefit-card')
@@ -288,6 +333,22 @@ function AppV5() {
           image.setAttribute('src', benefitVisuals[index])
         }
       })
+
+      const finalCtaSection = Array.from(theme.querySelectorAll<HTMLElement>('main section')).find(
+        (section) => section.textContent?.includes('Make the finance function easier to manage each month.'),
+      )
+
+      if (finalCtaSection) {
+        finalCtaSection.classList.add('v5-final-cta-section')
+        finalCtaSection.querySelector<HTMLElement>('a[href="#contact"]')?.classList.add('v5-final-cta-primary')
+        finalCtaSection.querySelector<HTMLElement>('a[href="#features"]')?.classList.add('v5-final-cta-secondary')
+
+        Array.from(finalCtaSection.querySelectorAll<HTMLElement>('div')).forEach((element) => {
+          if (element.textContent?.includes('City of London')) {
+            element.classList.add('v5-location-chips')
+          }
+        })
+      }
     }
 
     applyV5Enhancements()
